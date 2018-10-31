@@ -1,0 +1,26 @@
+SQL
+
+1.- SELECT count(*) FROM flights;
+
+2.- SELECT origin, avg(ArrDelay) arribada, avg(DepDelay) as sortida FROM flights group by Origin;
+
+3.- select origin, colYear, colMonth, avg(ArrDelay) as avgArrDelay from flights group by origin, colYear, colMonth order by origin;
+
+-- Ejercicio 4
+select U.City, F.colYear, F.colMonth, avg(ArrDelay) as avgArreDelay from usairports U right join flights F on U.IATA = F.Origin group by U.City, F.colYear, F.colMonth;
+
+-- Ejercicio 4 valido
+select U.City, F.colYear, F.colMonth, avg(ArrDelay) as avgArreDelay from flights F left join usairports U on F.Origin = U.IATA group by U.City, F.colYear, F.colMonth;
+
+-- Ejercico 4 hecho de otra manera
+select U.City, F.colYear, F.colMonth, avg(ArrDelay) as avgArreDelay from flights F, usairports U where F.Origin = U.IATA group by U.City, F.colYear, F.colMonth;
+
+
+-- Ejercico 5
+select C.Description, count(F.Cancelled)as Cancelled from flights F left join carriers C on  F.UniqueCarrier = C.CarrierCode group by C.description order by count(F.cancelled) ASC;
+
+-- Ejercicio 6
+select UniqueCarrier, FlightNum, sum(Distance) as Distance from flights group by UniqueCarrier, FlightNum Order by sum(Distance) DESC limit 10;
+
+-- Ejercico 7
+select UniqueCarrier, avg(ArrDelay) as Retraso from flights where ArrDelay >10 group by UniqueCarrier order by avg(ArrDelay) DESC;
