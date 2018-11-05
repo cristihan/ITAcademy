@@ -36,7 +36,8 @@ select U.City, F.colYear, F.colMonth, avg(ArrDelay) as avgArreDelay from flights
 
 -- 5. Les companyies amb més vols cancelats. A més, han d’estar ordenades de forma
 -- que les companyies amb més cancelacions apareguin les primeres.
-select C.Description, count(F.Cancelled)as Cancelled from flights F left join carriers C on  F.UniqueCarrier = C.CarrierCode group by C.description order by count(F.cancelled) ASC;
+-- revisado
+select C.Description, count(F.Cancelled)as Cancelled from flights F  left join carriers C on F.UniqueCarrier = C.CarrierCode where F.Cancelled = 1 group by C.Description order by count(F.Cancelled) DESC;
 
 -- 6. L’identificador dels 10 avions que més distància han recorregut fent vols.
 select UniqueCarrier, FlightNum, sum(Distance) as Distance from flights group by UniqueCarrier, FlightNum Order by sum(Distance) DESC limit 10;
@@ -45,5 +46,5 @@ select UniqueCarrier, FlightNum, sum(Distance) as Distance from flights group by
 -- arriben al seu destí amb un retràs promig major de 10 minuts.
 select UniqueCarrier, TailNum, avg(ArrDelay) as Retraso from flights group by UniqueCarrier order by avg(ArrDelay) DESC limit 10;
 -- Corregido
-select UniqueCarrier, avg(ArrDelay) as Retraso from flights where ArrDelay >10 group by UniqueCarrier order by avg(ArrDelay) DESC;
+select UniqueCarrier, TailNum, avg(ArrDelay) as Retraso from flights where ArrDelay >10 group by UniqueCarrier,TailNum order by avg(ArrDelay) DESC;
 
